@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://zy.ysepan.com/f_zy/ck/scjd.html?v=0.2&bbh=1182 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>上传文件</title>
+    <script type="text/javascript">var WebUploader;</script>
+    <script src="./aa.js.下载"></script>
+    <script src="./jquery.js.下载"></script>
+    <script src="./webuploader.withoutimage.min.js.下载"></script>
+    <script type="text/javascript">
+        document.domain = qdhost();
+        function qdhost() { var x = document.domain.split("."); if (x.length == 1) return document.domain; if (x.length == 3) return x[1] + "." + x[2]; return x[2] + "." + x[3]; }
+
+
+        //console 补订
+        if (!window.console) { window.console = { log: function () { } } };
+        var isIE;
+        var szdqpd = false;
+        var $bm = function (r) { return encodeURIComponent(r); }
+        //禁右,防止用户刷新窗口
+        document.oncontextmenu = function () { if (window.location.host != "z.ys168.com") { self.event.returnValue = false; } };
+
+        window.onload = function () {
+            setTimeout("jiechi_f()", 500);
+        };
+        function jiechi_f() {
+            if (!WebUploader) {
+                parent.scsx_jsq++;
+                if (parent.scsx_jsq > 2) {
+                    //alert("抱歉，由于您使用的线路运营商劫持原因，未能正确加载程序，请换个浏览器试试。");
+                    return;
+                }
+                jljc("上传文件", "未能正确加载uploader.js。刷新" + parent.scsx_jsq + "次");
+                location.reload();
+            } else {
+                if (parent.scsx_jsq > 0) { jljc("上传文件", "刷新后正确加载。第" + parent.scsx_jsq + "次"); }
+            }
+        }
+        function jljc(lx, bz) {
+            return;
+            var ss = document.getElementsByTagName("script");
+            var ss_str = "";
+            for (var i = 0; i < ss.length; i++) { if (ss[i].src != "") { ss_str += ss[i].src + "<br>"; } }
+            parent._AJ("qt.aspx?cz=Jiechi&js=" + parent.$bm(ss_str) + "&lx=" + parent.$bm(lx) + "&bz=" + parent.$bm(bz), function (r) { });
+        }
+        function csdy() {
+            isIE = isIEpd();
+            if (!szdqpd) {
+                szdqpd = true;
+                var dqcoo = ooG("tx1"); var dqcoo2 = ooG("tx2");
+                if (dqcoo != null) { $id("idc1").checked = (dqcoo == "1") ? true : false; }
+                if (dqcoo2 != null) { $id("idc2").checked = (dqcoo2 == "1") ? true : false; }
+            }
+            parent._ev.dy("_ml.dqxz", "F_" + _zck.id + ".qxcl");
+            parent._ev.dy("_ml.dqzml", "F_" + _zck.id + ".mlxs");
+            parent._ev.dy("glyzt", "F_" + _zck.id + ".qxcl");
+
+            $id("ch_pdgk").checked = false;
+            if (parent._yh.gly || parent._kj.qxsc) { $id("ch_pdgk").checked = true; }
+
+            qxcl();
+            _zck.dygb = function () {
+                if (_ff.jlo) { alert("请先中止上传，才可以关闭窗口"); return true; }
+                return false;
+            };
+        }
+        function angk() {
+            if (parent._yh.gly) { return;}
+            if (parent._kj.qxsc) { return; }
+            if ($id("ch_pdgk").checked) { alert("抱歉，无登录密码的空间访客不允许增加公开数据"); $id("ch_pdgk").checked = false; }
+        }
+        function qxcl() {
+            var mlbh = parent._ml.dqxz;
+            if (mlbh < 0) {
+                $("#czq p").html("需要打开一个目录");
+                xksc(false);
+                return;
+            }
+            var jg = parent._ml.xkadd(mlbh);
+            if (jg != "") {
+                xksc(false);
+                $("#czq p").html("<font color=red>" + jg + "</font>");
+                return;
+            }
+
+            xksc(true);
+            //console.log("cjupload开始");
+            cjupload();
+            //console.log("cjupload结束");
+            mlxs();
+        }
+        function mlxs() {
+            var mlbh = parent._ml.dqxz;
+            if (mlbh < 0) {
+                return;
+            }
+            var ml = parent.$("#ml_" + mlbh).find("a").html();
+            if (ml.length > 12) ml = ml.substr(0, 10) + "...";
+            var zml = parent._ml.dqzml;
+            if (zml != "") zml += "/";
+            $("#czq p").html("<b>目标目录：</b>" + ml + "/" + zml);
+        }
+        function xksc(pd) {
+            if (pd) {
+                $("#ysupczq").show();
+                $("#ysupczq2").hide();
+
+            } else {
+                $("#ysupczq").hide();
+                $("#ysupczq2").show();
+            }
+
+        }
+        function jzsm() {
+            var mlbh = parent._ml.dqxz;
+            if (mlbh < 0) {
+                alert("请先打开一个目录后再上传");
+                return;
+            }
+            if (!parent._mlxx.find().sc) {
+                alert("您在当前打开的目录无上传权限！")
+                return;
+            }
+            alert($("#czq p font").html());
+        }
+
+        var bbb = function (r) { return encodeURIComponent(escape(r)); }
+        var _jm = {
+            mb: null, jsq: null, fdx: 1024, dqo: null,
+            add: function (rxh) {
+
+                if (!this.mb) this.mb = $(".sjtb").eq(0);
+                var o = _ff.lb[rxh];
+                var f1 = uploader.getFile(o.fid);
+                var ml = o.mlmc;
+                if (ml.length > 12) ml = ml.substr(0, 10) + "...";
+                ml += "/";
+                if (o.zml != "") ml += o.zml + "/";
+                var s1 = "<tr id='J" + o.fid + "'>";
+                s1 += "<td class='scwj'>";
+                s1 += "<p>" + ml + "<label>" + f1.name + "</label> 【" + WebUploader.Base.formatSize(o.size) + "】</p>";
+                s1 += "<div style='display:none;'><span style='width:0;'></span></div>";
+                s1 += "</td>";
+                s1 += "<td class='sczt'><P>等待上传</P><div></div></td>";
+                s1 += "</tr > ";
+                $(this.mb).append(s1);
+            },
+            jd: function (rbfb) {
+                //console.log("jd.rbfb=" + rbfb);
+                if (this.dqo) {
+                    //$(this.jdt).children().eq(0).css("width", rbfb * 100 + "%");
+
+                    this.dqo.find(".scwj span").css("width", rbfb * 100 + "%");
+                    var n1 = (new Date().getTime() - this.jsq) / 1000;
+                    if (n1 < 0.5) return;
+                    var nsl = this.fdx * rbfb / n1;
+                    var jg = WebUploader.Base.formatSize(nsl) + "/s";
+
+                    this.dqo.find(".sczt div").html(jg);
+
+                }
+            },
+            ks: function (ro) {
+                this.dqo = $("#J" + ro.fid);
+                this.dqo.addClass("dq");
+                this.jsq = new Date().getTime();
+                this.fdx = ro.size;
+                this.dqo.find(".scwj div").show();
+                this.dqo.find(".sczt p").html("正在上传");
+
+            },
+            js: function (ro) {
+                var x = $("#J" + ro.fid);
+                //x.removeClass("dq").addClass("ok");
+                x.addClass("ok");
+                x.find(".sczt p").eq(0).html("上传成功");
+                var wjch = x.parent().children(".ok");
+                //if (wjch.length > 1) {
+                wjch.eq(0).removeClass("ok").fadeOut("slow", function () { $(this).remove(); });
+                //}
+                if ($id("idc1").checked == true) { pl(); }
+            },
+            ql: function () {
+                $(this.mb).empty();
+            }
+        }
+        var _xswj = {
+            isgz: false, iswait: false,
+            jxpd: function () {
+                if (this.iswait) {
+                    this.iswait = false; this.dq(_ff.jlo.mlbh, _ff.jlo.zml, _ff.jlo.wjbh);
+                    //console.log("由_xswj触发zxup");
+                    _ff.zxup();
+
+                }
+
+            },
+            dq: function (rmlbh, rzml, rwjbh) {
+
+                if (rmlbh != parent._ml.dqxz) {
+                    parent._mlxx.find(rmlbh).gxpd = true;
+                    return;
+                }
+                _xswj.isgz = true;
+                parent._AJ("wj.aspx?cz=Dqfile&wjbh=" + rwjbh + "&mlbh=" + rmlbh,
+                    function (rj, rnr) {
+                        _xswj.isgz = false;
+                        parent._wj.addnew(rmlbh, rzml, rnr, rwjbh);
+                        _xswj.jxpd();
+                        parent._kj.gxsyl(rj.kjsyl);
+                        parent._kj.cjzscxx(rj.jzscxx);
+                        parent._mlxx.find(rmlbh).scpz = rj.scpz;
+                        parent._ml.gxmlnew(rmlbh, rzml, true);
+                    },
+                    function (r) {
+                        _xswj.isgz = false;
+                    })
+            }
+        }
+        var _ff = {
+            cjpd: false,
+            lb: [], jlo: null, scdz: "",
+            wjzl: function () {
+                var n1 = 0;
+                $.each(this.lb, function (i, o) { n1 = n1 + o.size; });
+                return WebUploader.Base.formatSize(n1)
+            },
+            addfiles: function (rfiles) {
+                if ($("#wjbz").val().length > 50) { alert("抱歉，文件备注最多支持50个字符，当前长度为：" + $("#wjbz").val().length); return; }
+                if (rfiles.length > 30) {
+                    alert("抱歉，单次选取不能超过30个文件");
+                    return;
+                }
+                var mlbh = parent._ml.dqxz;
+                if (mlbh <= 0) return;
+                if (rfiles.length + parent._ml.tjzs(mlbh) * 1 > parent._kj.xdwjsl * 1) {
+                    var s1 = "文件数量超过限定值,无法上传";
+                    s1 += "\n\n 当前空间类型【" + parent._kj.jbmc + "】限定单个目录最大文件数为:" + parent._kj.xdwjsl + "个"
+                    s1 += "当前目录内数据数量为:" + parent._ml.tjzs(mlbh) + "个。";
+                    s1 += "您这次最多还可以上传: " + (parent._kj.xdwjsl * 1 - parent._ml.tjzs(mlbh) * 1) + "个文件";
+                    if (!parent._kj.ffpd) { s1 += "\n\n【提示:升级空间后可以提高单目录文件数量限定值】"; }
+                    alert(s1);
+                    return;
+                }
+
+                var wjl = 0;    //新加的文件量总量
+                var fmax = parent._kj.fmax * 1024 * 1024;
+                var yzok = true;
+                var wjmjh = "";
+                $(rfiles).each(function (i, f) {
+                    wjmjh += f.name + "|";
+                    wjl += parseInt(f.size);
+                    //if (f.size == 0) { alert("抱歉，不支持空文件上传，文件（" + f.name + "）大小为空。"); yzok = false; return false; }
+
+                    var s1 = "%#/\\<\'>&\:*?|`\"";
+                    for (i = 0; i <= s1.length - 1; i++) {
+                        if (f.name.indexOf(s1.substr(i, 1)) >= 0) { alert("抱歉，文件名不支持字符(" + s1.substr(i, 1) + ")"); yzok = false; return false; }
+                    }
+
+                    if (f.name.length > 200) { alert("抱歉，文件名最多支持200个字符，当前长度为：" + f.name.length); yzok = false; return false; }
+
+                    if (f.size > fmax) {
+                        var s1 = "“" + parent._kj.jbmc + "”单个文件量大小不能超过【" + parent._kj.fmax + "M】";
+                        s1 += "\n 超标文件是：" + f.name + " 【" + WebUploader.Base.formatSize(f.size) + "】";
+                        if (parent._kj.kb != "D") { s1 += "\n\n 提示：升级空间可以提高单个文件量限制。"; }
+                        s1 += "\n\n 请重新选择文件"
+                        alert(s1);
+                        yzok = false;
+                        return false;
+                    }
+                });
+
+                if (!yzok) { return; }
+                wjl = (wjl / 1024 / 1024).toFixed(1);
+                if (wjl > parent._kj.kjsyl) {
+                    var s1 = "空间容量不足"
+                    s1 += "\n 所选文件总量【" + wjl + "M】大于空间剩余量【" + parent._kj.kjsyl + "M】,无法上传"
+                    if (parent._kj.kb != "D") { s1 += "\n\n 提示：升级空间可以增大空间容量" }
+                    alert(s1)
+                    return;
+                }
+                var t = this;
+                parent._AJ("wj.aspx?cz=Jcgjc&wjmjh=" + parent.$bm(wjmjh) + "&bz=" + parent.$bm($("#wjbz").val() + "&zml=" + parent.$bm(parent._ml.dqzml)),
+                    function (r) {
+                        t.addfiles1(rfiles);
+                    })
+            },
+            addfiles1: function (rfiles) {
+                //console.log("addfiles1_0");
+                if (!rfiles) return;
+                // _dht.gbcd();
+                var mlbh = parent._ml.dqxz;
+                var mlmc = parent.$("#ml_" + mlbh).find("a").html();
+                var zml = parent._ml.dqzml;
+                this.scdz = parent._mlxx.scdz;
+                //var pz = parent._mlxx.find(mlbh).scpz;
+                $(rfiles).each(function (i, o) {
+                    _ff.lb.push({
+                        mlbh: mlbh,
+                        mlmc: mlmc,
+                        zml: zml,
+                        fid: o.id,
+                        wjbh: 0, //新文件编号
+                        zt: "",
+                        pz: "",
+                        size: o.size,
+                        guid: WebUploader.Base.guid()
+                    });
+                    _jm.add(_ff.lb.length - 1);
+                });
+                if (!_ff.jlo) _ff.zxup();
+            },
+            zxup: function () {
+                //console.log("zxup_0");
+                //if (_ff.jlo) {
+                //    if (_ff.jlo.zt != "ok") return;
+                //}
+                _ff.jlo = null;
+                var xh = 0;
+                $.each(this.lb, function (i, o) { if (o.zt == "") { _ff.jlo = o; xh = i + 1; return false; } });
+                if (!_ff.jlo) { this.allover(); return; }
+                var mlbh = _ff.jlo.mlbh;
+                var pz = parent._mlxx.find(mlbh).scpz;
+
+                if (pz != "") {
+                    _ff.jlo.pz = pz;
+                } else {
+                    parent._AJ("qt.aspx?cz=Mlscrz&mlbh=" + mlbh, function (rj) {
+                        parent._mlxx.find(mlbh).scpz = rj.pz;
+                        parent._mlxx.scdz = rj.fwq;
+                        _ff.jlo.pz = rj.pz;
+                        _ff.scdz = rj.fwq;
+                        _ff.zxtj();
+                    }, function (r) {
+                        _ff.errcl(null, r);
+                    });
+                    return;
+                }
+                //console.log("zxup_1");
+                this.zxtj();
+                //console.log("zxup_2");
+            },
+            zxtj: function () {
+                //console.log("zxtj_0");
+                _jm.ks(_ff.jlo);
+                //console.log("zxtj_1");
+                $("#czq .qxsc").show();
+                $(".scts").hide();
+                this.jlo.zt = "zxtj";
+                var gk = "0"; if ($id("ch_pdgk").checked) { gk = "1"; }
+                var __dz = this.scdz + "?zml=" + $bm(this.jlo.zml) + "&gk=" + gk + "&wjm=" + $bm(uploader.getFile(this.jlo.fid).name) + "&wjbz=" + $bm($("#wjbz").val());
+                //console.log(__dz);
+                uploader.option("server", __dz);
+                uploader.option("formData", {
+                    guid: this.jlo.guid,
+                    pz: this.jlo.pz
+                    //                    size: parseInt(this.jlo.size / 1024 / 1024)
+                });
+                //console.log("zxtj_2");
+                window.uploader.upload(this.jlo.fid);
+                //console.log("zxtj_3");
+            },
+            zxjs: function (file, response) {
+                if (response.hasError) {
+                    this.errcl(file, response.errxx)
+                    return;
+                }
+                _jm.jd(1);
+                _jm.js(this.jlo);
+                if (this.jlo.fid != file.id) {
+                    //console.log("上传结束的ID对不上");
+                }
+                this.jlo.zt = "OK";
+                this.jlo.wjbh = response.wjbh;
+                //
+                if (!_xswj.isgz) {
+                    _xswj.dq(this.jlo.mlbh, this.jlo.zml, this.jlo.wjbh);
+                } else {
+                    _xswj.iswait = true;
+                    //console.log("iswait,return")
+                    //console.log("退出")
+                    return;
+                }
+
+                //
+
+                this.zxup();
+            },
+            yhstop: function () {
+                //if (!confirm("是否中止文件上传？")) return;
+                //window.uploader.stop(true);
+                if (_ff.jlo) {
+                    window.uploader.cancelFile(_ff.jlo.fid);
+                }
+
+                this.qlsz();
+                _jm.ql();
+            },
+            allover: function () {
+
+                if (this.lb.length == 0) return;
+                //var mlbh =parent._ml.dqxz;
+                //var bhjl = [];
+                //$.each(this.lb, function (i, o) {
+                //    if (o.mlbh == mlbh) {
+                //        bhjl.push(o.wjbh);
+                //    }
+                //});
+
+                if ($id("idc2").checked == true) { _zck.gb(); }
+
+                $(".scts").show();
+                this.qlsz();
+                //if (bhjl.length > 0) { _wjlb.xwjcl(bhjl); }
+
+            },
+            errcl: function (file, reason) {
+                var fmc = "";
+                if (file) { fmc = file.name; }
+                if (reason == "Q_TYPE_DENIED") { alert("抱歉，不支持上传文件量为0的文件。"); return; }
+                alert("抱歉！上传文件【" + fmc + "】时出错:" + parent.$jm(reason) + "\n\n请尝试重新上传");
+                if (_ff.jlo) {
+                    window.uploader.cancelFile(_ff.jlo.fid);
+                }
+                this.qlsz();
+                _jm.ql();
+            },
+            qlsz: function () {
+                //console.log("qlsz===================================");
+                //当前所有上传完成
+                $("#czq .qxsc").hide();
+                if (this.lb.length == 0) return;
+                this.jlo = null;
+                this.lb = [];
+
+            }
+        };
+
+        //上传控件
+        function cjupload() {
+            if (_ff.cjpd) return;
+            _ff.cjpd = true;
+            var GUID = WebUploader.Base.guid();
+            var uploader = WebUploader.create({
+                swf: "/f_zy/webuploader/Uploader.swf",
+                auto: false,    //是否自动上传
+                chunkRetry: 3,   //出错后尝试上传次数
+                fileVal: "file",     //上传域可设置为用户名
+                duplicate: true,     //为真进可以选择同一文件
+                //server: BASE_URL + 'js.aspx',
+                chunked: true,
+                chunkSize: 2 * 1024 * 1024,
+                //pick: { id: '#ysupczq', label: "上传文件", multiple: true },
+                formData: { guid: GUID },        //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
+                disableGlobalDnd: true, //是否禁掉整个页面的拖拽功能
+                threads: 1, //上传并发数,不能更改，否则无法合并
+                compress: false, //图片在上传前不进行压缩
+                fileSingleSizeLimit: 2 * 1024 * 1024 * 1024  // 2G
+
+            });
+            uploader.on('ready', function () {
+                window.uploader = uploader;
+                uploader.addButton({ id: '#ysupczq', label: "添加文件(可多选)", multiple: true });
+            });
+            uploader.on("filesQueued", function (files) { _ff.addfiles(files); });
+            uploader.on("startUpload", function () { });
+            uploader.on("uploadStart", function (file) { });
+            uploader.on('uploadProgress', function (file, percentage) {
+
+                if (!_ff.jlo) return;
+                if (file.id != _ff.jlo.fid) {
+                    //console.log("uploadProgress 返回ID值不一样" + file.id);
+                    return;
+                }
+                _jm.jd(percentage * 1)
+            });
+            uploader.on('uploadSuccess', function (file, response) { _ff.zxjs(file, response); });
+            uploader.on('uploadComplete', function (file) { });
+            uploader.on("uploadFinished", function () { });
+            uploader.on("stopUpload", function () { });
+            uploader.on('uploadError', function (file, reason) { _ff.errcl(file, reason) });
+            uploader.on("error", function (reason) { _ff.errcl(null, reason) });
+        }
+        function pl() {
+            rwj = "ckzy/UP.wav";
+            if (isIE) {
+                $id("ysaudio").innerHTML = "<bgsound src='" + rwj + "' loop='1'>";
+            } else {
+                $id("ysaudio").innerHTML = "<audio autoplay='autoplay'><source src='" + rwj + "' type='audio/wav' />";
+            }
+        }
+        function isIEpd() { return !!window.ActiveXObject || "ActiveXObject" in window; }
+        function txszo() { ooS("tx1", ($id("idc1").checked == true) ? 1 : 0); }
+        function txszo2() { ooS("tx2", ($id("idc2").checked == true) ? 1 : 0); }
+        function ooS(name, value) {
+            var exp = new Date(); exp.setTime(exp.getTime() + 360 * 24 * 60 * 60 * 1000);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        }
+        function ooG(name) {
+            var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null) return unescape(arr[2]); return null;
+        }
+        function $id(rid) { return document.getElementById(rid); }
+    </script>
+    <style>
+        body {
+            background-color: #FFFFE6;
+            padding: 0;
+            margin: 0px;
+            font-size: 9pt;
+        }
+
+        #nrq {
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 65px;
+            overflow: auto;
+            word-wrap: break-word;
+            word-break: break-all;
+            padding: 2px;
+        }
+
+        .sjtb {
+            border: 1px solid #BDB76B;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .sjtb td {
+                border: 1px solid #BDB76B;
+                font-size: 9pt;
+            }
+
+            .sjtb tr.trbt {
+                background-color: #EEE8AA;
+                color: #000;
+            }
+
+        p {
+            margin: 0px;
+            line-height: 150%;
+        }
+
+        tr.dq {
+            border: 2px solid blue;
+        }
+
+            tr.dq label {
+                color: blue;
+            }
+
+        td.scwj { /*position: relative; box-sizing: border-box;*/
+            padding: 3px;
+        }
+
+            td.scwj div {
+                border: 1px solid #BDB76B;
+            }
+
+            td.scwj span {
+                display: block;
+                background-color: #4cff00;
+                height: 10px;
+            }
+
+            td.scwj p { /*display: block; position: absolute; z-index: 100; top: 0;*/
+                padding: 3px;
+            }
+
+            td.scwj b { /*font-weight:normal;*/
+            }
+
+        td.sczt {
+            width: 68px;
+            padding: 3px;
+        }
+
+            td.sczt p {
+                text-align: center;
+            }
+
+            td.sczt div {
+                text-align: center;
+                font-size: 12px;
+            }
+
+        .webuploader-container {
+            position: relative;
+        }
+
+        .webuploader-element-invisible {
+            position: absolute !important;
+            clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+            clip: rect(1px,1px,1px,1px);
+        }
+
+        .webuploader-pick {
+            position: relative;
+            display: block;
+            cursor: pointer;
+            background: #00b7ee;
+            padding: 5px 10px;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            overflow: hidden;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            margin-left: 10px;
+            text-decoration: none;
+            float: left;
+            margin-left: 20px;
+        }
+
+        .webuploader-pick-hover {
+            background: #00a2d4;
+        }
+
+        a:hover.webuploader-pick {
+            background: #00a2d4;
+        }
+
+            a:hover.webuploader-pick.qxsc {
+                background-color: #c21313
+            }
+
+        .webuploader-pick-disable {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .qxsc {
+            background-color: #fc3d3d
+        }
+
+        .scts {
+            padding: 5px;
+            font-size: 16px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="nrq"><table class="sjtb"></table><p class="scts">文件上传完毕！</p></div>
+    <div id="czq" style="position:absolute;height:120px;background-color:#d1cfd2;width:100%;bottom:0;border-top:1px solid #808080">
+        <p style="padding:5px;"><b>目标目录：</b>图片上传/</p>
+        <div style="padding-left:5px;"><b>文件备注：</b><input type="text" id="wjbz" style="width:200px;">
+            <label style="margin-left:30px;" for="ch_pdgk"><b>访客可见</b></label><input type="checkbox" id="ch_pdgk" checked="checked" onclick="angk();">
+        </div>
+        <div style="padding-top:10px;"></div>
+        <div style="float:left;" id="ysupczq" class="webuploader-container"><div class="webuploader-pick">添加文件(可多选)</div><div id="rt_rt_1if47soap8417t0bj74u6tis2" style="position: absolute; inset: 0px auto auto 20px; width: 127px; height: 30px; overflow: hidden;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div>
+        <a href="javascript:;" id="ysupczq2" class="webuploader-pick" onclick="jzsm();" style="display:none;text-decoration:line-through;">添加文件</a>
+        <a href="javascript:;" class="webuploader-pick qxsc" onclick="_ff.yhstop();" style="display:none;">取消上传</a>
+        <a href="javascript:;" class="webuploader-pick" onclick="_zck.gb();">关闭</a>
+        <input style="margin-left:10px;" type="checkbox" id="idc1" checked="checked" onclick="txszo();"><label for="idc1">声音提醒</label>
+        <input style="margin-left:10px;" type="checkbox" id="idc2" onclick="txszo2();"><label for="idc2">自动关闭</label>
+    </div>
+    <div id="ysaudio" style="display:none;"></div>
+
+</body></html>

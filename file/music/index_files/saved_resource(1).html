@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://zy.ysepan.com/f_zy/ck/glts.html?bbh=1182 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>管理员登录提示</title>
+    <style type="text/css">
+        body {
+            font-size: 9pt;
+            border: 0px;
+            padding: 0px;
+            margin: 0;
+            font-family: 宋体, Century Gothic, Arial, Helvetica;
+        }
+
+        p {
+            margin-top: 5px;
+            line-height: 150%;
+        }
+    </style>
+    <script src="./jquery.js.下载"></script>
+    <script type="text/javascript">
+        document.domain = qdhost();
+        function qdhost() { var x = document.domain.split("."); if (x.length == 1) return document.domain; if (x.length == 3) return x[1] + "." + x[2]; return x[2] + "." + x[3]; }
+
+        function csdy() {
+            jsq = 10;
+            $id("bt1").focus();
+            gbts();
+            //var ym = parent.window.location.href;
+            //if (ym.indexOf(".cccpan.com") >= 0) {
+            //    $("#aa").html("&nbsp;&nbsp;<span style='color:blue'>抱歉，cccpan域名由于经常受到攻击，有时会出现不能访问情况，请尽快使用新的域名：http://" + parent._kj.dlmc + ".ysepan.com</span>");
+            //    $("#aa").show();
+            //    jsq = 30;
+            //} else { $("#aa").hide(); }
+        }
+
+        function gbts() {
+            jsq -= 1; if (jsq <= 0) { _zck.gb(); return; }
+            $id("bt1").value = "关闭 (" + jsq + ")"; setTimeout('gbts()', 1000)
+        }
+        function $id(rid) { return document.getElementById(rid); }
+        function wbg(cr) {
+            var zz = "<table border=1 width='380px' style='border-collapse: collapse' bordercolor='#BDB76B' cellspacing=0>";
+            zz += "<tr bgcolor='#EEE8AA'><td>登录时间</td><td>登录方式</td><td>登录ip</td><td>ip所在地</td></tr>";
+            if (cr == '') { zz += '<tr><td colspan=4>以前无记录</td></tr></table>'; return zz; }
+            var z1 = cr.split("|");
+            var z2;
+            for (i = 0; i <= z1.length - 2; i++) {
+                z2 = z1[i].split(',');
+                if (z2.length != 4) return "";
+                var glydlfs = "空间后台";
+                if (z2[1] == "0") { glydlfs = "管理区"; }
+                zz += "<tr><td>[" + z2[3] + "]" + z2[0] + "</td>";
+                zz += "<td>" + glydlfs + "</td>";
+                zz += "<td>" + z2[2] + "</td>";
+                zz += "<td><a href=http://www.baidu.com/s?wd=" + z2[2] + " target=_blank>查看</a></td></tr>";
+            }
+            zz += "</table>";
+            zz += "如有异常，请尽快修改密码，确认邮箱和密保是否正确。<br />"
+            return zz
+        }
+    </script>
+
+</head>
+<body>
+    <div id="nrq" style="padding:10px;">
+        <p>&nbsp;&nbsp;您已经在管理区登录，拥有空间内所有权限，可直接开启加密目录。<br></p>
+        <p id="aa">&nbsp;&nbsp;</p>
+        <p align="center">
+            <input type="button" value="关闭 (1)" id="bt1" onclick="_zck.gb();">
+        </p>
+    </div>
+
+</body></html>
